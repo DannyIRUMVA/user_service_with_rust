@@ -1,7 +1,6 @@
 #[cfg(test)]
 pub(crate) mod tests {
     use uuid::Uuid;
-
     use crate::domain::User;
 
     #[test]
@@ -11,16 +10,16 @@ pub(crate) mod tests {
     }
 
     #[test]
-    fn register_user() {
+    fn test_user_registration() {
         let id = Uuid::new_v4();
-        let email = "boyg87059@gmail.com".to_string();
+        let email = "test@example.com".to_string();
         let password = "password".to_string();
 
-        let mut user = User::default();
-        user = user.register(id.clone(), email.clone(), password.clone()).unwrap();
+        let mut user = User::new(id, email.clone(), password.clone());
 
-        assert_eq!(user.id(), id);
-        assert_eq!(email, user.email_as_ref());
-        assert_eq!(true, user.is_registered());
+        let result = user.register();
+
+        assert!(result.is_ok());
+        assert!(user.is_registered());
     }
 }

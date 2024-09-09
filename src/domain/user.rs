@@ -1,4 +1,4 @@
-//src/domain/user.rs
+// src/domain/user.rs
 use uuid::Uuid;
 use crate::domain::*;
 
@@ -35,24 +35,22 @@ impl User {
         self.is_registered
     }
 
-    pub fn register(
-        mut self,
-        id: Uuid,
-        email: String,
-        password: String
-    ) -> Result<(), UserDomainError> {
+    pub fn register(&mut self) -> Result<(), UserDomainError> {
         if self.is_registered {
-            return Err(UserDomainError::UserAlreadyRegistered(self.email.value()));
+            return Err(UserDomainError::UserAlreadyRegistered(self.email.clone()));
         }
-        self.id = id;
+
         self.is_registered = true;
-        self.email = email;
-        self.password = password;
+        Ok(())
     }
 }
 
 impl Default for User {
     fn default() -> Self {
-        User::new(Uuid::new_v4(), "boyg87059@gmail.com".to_string(), "password".to_string())
+        User::new(
+            Uuid::new_v4(),
+            "boyg87059@gmail.com".to_string(),
+            "password".to_string(),
+        )
     }
 }
